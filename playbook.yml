@@ -1,0 +1,62 @@
+- name: Install and configure ZSH
+  connection: local
+  vars:
+    - user: rick
+    - script: /tmp/ohmyzsh.sh
+  hosts: 127.0.0.1
+  tasks:
+    - name: Install ZSH
+      ansible.builtin.apt:
+        update_cache: yes
+        name:
+          - curl
+          - git
+          - zsh
+        state: present
+      become: true
+      become_method: sudo
+
+    - name: Recover the file
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        dest: "{{ script }}"
+        mode: '0777'
+        validate_certs: no
+
+ #  - name: Recover the file
+    # ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubcontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+
+    - name: Run the script
+      shell:
+        cmd: "{{ script }} --unattended"
+
+    - name: Use ZSH by default
+      ansible.builtin.user:
+        name: "{{ user }}"
+        shell: /usr/bin/zsh
+      become: true
+      become_method: sudo
+
+
+    - name: Configure ZSH
+      ansible.builtin.lineinfile:
+        path: "/home/{{ user }}/.zshrc"
+        line: ZSH_THEME="random"
+        regexp: 'ZSH_THEME="robbyrussell"'
+
+    - ansible.builtin.lineinfile:
+        path: "/home/{{ user }}/.zshrc"
+        line: ZSH_THEME_RANDOM_CANDIDATES=( "mortalscumbag" "garyblessington" "blinks" "dallas" "dstufft" "aussiegeek" "wezm+" "pmcgee" "fino" "xiong-chiamiov-plus" "strug" "rkj" "amuse" "candy" "jispwoso" "bira" "jtriley" "junkfood" "strug" "jnrowe" "linuxonly" "mira" "arrow" )
+        regexp: '^# ZSH_THEME_RANDOM_CANDIDATES='
+
+    - ansible.builtin.lineinfile:
+        path: "/home/{{ user }}/.zshrc"
+        line: plugins=(git sudo ansible)
+        regexp: '^plugins='
+
+
+    - name: Delete the installation script
+      ansible.builtin.file:
+        path: "{{ script  }}"
+        state: absent
