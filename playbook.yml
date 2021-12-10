@@ -52,7 +52,7 @@
 
     - ansible.builtin.lineinfile:
         path: "/home/{{ user }}/.zshrc"
-        line: plugins=(git sudo ansible)
+        line: plugins=(git sudo zsh-autosuggestions dirhistory web-search)
         regexp: '^plugins='
 
 
