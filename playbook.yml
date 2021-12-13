@@ -47,7 +47,7 @@
 
     - ansible.builtin.lineinfile:
         path: "/home/{{ user }}/.zshrc"
-        line: ZSH_THEME_RANDOM_CANDIDATES=( "mortalscumbag" "garyblessington" "blinks" "dallas" "dstufft" "aussiegeek" "wezm+" "pmcgee" "fino" "xiong-chiamiov-plus" "strug" "rkj" "amuse" "candy" "jispwoso" "bira" "jtriley" "junkfood" "strug" "jnrowe" "linuxonly" "mira" "arrow" )
+        line: ZSH_THEME_RANDOM_CANDIDATES=( "mortalscumbag" "blinks" "dallas" "dstufft" "aussiegeek" "wezm+" "pmcgee" "fino" "xiong-chiamiov-plus" "strug" "rkj" "amuse" "candy" "jispwoso" "bira" "jtriley" "junkfood" "strug" "jnrowe" "linuxonly" "mira" "arrow" )
         regexp: '^# ZSH_THEME_RANDOM_CANDIDATES='
 
     - ansible.builtin.lineinfile:
