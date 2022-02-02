@@ -60,7 +60,7 @@ Check correct operation by connecting to each of the machines.
 
 # Remark :
 
-Here, with this configuration it's not necessary to use "ZSH_THEME_RANDOM_CANDIDATES" because we have only one theme. The better solution here should be integrate the theme in "ZSH_THEME". But i let "ZSH_THEMES_RANDOM_CANDIDATES" for example. If you want add multiple themes, separate them with a double quote like : `( "theme1" "theme2" )`.
+Here, with this configuration it's not necessary to use "ZSH_THEME_RANDOM_CANDIDATES" because we have only one theme. The better solution here should be integrate the theme in "ZSH_THEME". But i let "ZSH_THEMES_RANDOM_CANDIDATES" for example. If you want add multiple themes, separate them with a double quotes like : `( "theme1" "theme2" )`.
 
 # Execution :
 
