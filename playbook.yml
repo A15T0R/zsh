@@ -22,11 +22,9 @@
         dest: "{{ script }}"
         mode: '0755'
 
-
     - name: Run the script
       ansible.builtin.shell:
         cmd: "{{ script }} --unattended"
-
 
     - name: Use ZSH by default
       ansible.builtin.user:
@@ -35,31 +33,26 @@
       become: true
       become_method: sudo
 
-
     - name: Configure ZSH
       ansible.builtin.lineinfile:
         path: "/home/{{ user }}/.zshrc"
         line: ZSH_THEME="random"
         regexp: 'ZSH_THEME="robbyrussell"'
 
-
     - ansible.builtin.lineinfile:
         path: "/home/{{ user }}/.zshrc"
         line: ZSH_THEME_RANDOM_CANDIDATES=( "junkfood" )
         regexp: '^# ZSH_THEME_RANDOM_CANDIDATES='
-
 
     - ansible.builtin.lineinfile:
         path: "/home/{{ user }}/.zshrc"
         line: plugins=(git sudo zsh-autosuggestions dirhistory web-search)
         regexp: '^plugins='
 
-
     - name: Recover the "zsh-autosuggestions" theme
       ansible.builtin.git:
         repo: "https://github.com/zsh-users/zsh-autosuggestions"
         dest: "/home/{{ user }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
-
 
     - name: Delete the installation script
       ansible.builtin.file:
