@@ -65,7 +65,7 @@ Here, with this configuration it's not necessary to use "ZSH_THEME_RANDOM_CANDID
 # Execution :
 
 To run this playbook you have to use the command :
-```yaml
+```bash
 ansible-playbook playbook.yml --ask-become-pass
 ```	
 The "ask-become-pass" option is mandatory since there are 'become' and 'become_method' entries in the playbook to indicate that it should run the task as sudo.
