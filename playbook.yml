@@ -20,16 +20,13 @@
       ansible.builtin.get_url:
         url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
         dest: "{{ script }}"
-        mode: '0777'
-        validate_certs: no
-
- #  - name: Recover the file
-    # ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubcontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+        mode: '0755'
 
 
     - name: Run the script
-      shell:
+      ansible.builtin.shell:
         cmd: "{{ script }} --unattended"
+
 
     - name: Use ZSH by default
       ansible.builtin.user:
@@ -45,20 +42,23 @@
         line: ZSH_THEME="random"
         regexp: 'ZSH_THEME="robbyrussell"'
 
-        #    - ansible.builtin.lineinfile:
-        #        path: "/home/{{ user }}/.zshrc"
-        #        line: ZSH_THEME_RANDOM_CANDIDATES=( "mortalscumbag" "blinks" "dallas" "dstufft" "wezm+" "pmcgee" "fino" "xiong-chiamiov-plus" "strug" "rkj" "amuse" "candy" "jispwoso" "bira" "jtriley" "junkfood" "strug" "jnrowe" "linuxonly" "mira" "arrow" )
-        #        regexp: '^# ZSH_THEME_RANDOM_CANDIDATES='
 
     - ansible.builtin.lineinfile:
         path: "/home/{{ user }}/.zshrc"
         line: ZSH_THEME_RANDOM_CANDIDATES=( "junkfood" )
         regexp: '^# ZSH_THEME_RANDOM_CANDIDATES='
 
+
     - ansible.builtin.lineinfile:
         path: "/home/{{ user }}/.zshrc"
         line: plugins=(git sudo zsh-autosuggestions dirhistory web-search)
         regexp: '^plugins='
+
+
+    - name: Recover the "zsh-autosuggestions" theme
+      ansible.builtin.git:
+        repo: "https://github.com/zsh-users/zsh-autosuggestions"
+        dest: "/home/{{ user }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
 
 
     - name: Delete the installation script
